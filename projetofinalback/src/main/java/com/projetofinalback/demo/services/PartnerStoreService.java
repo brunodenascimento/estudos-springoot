@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.projetofinalback.demo.repositories.PartnerStoreRepository;
 import com.projetofinalback.demo.repositories.ProductRepository;
+import com.projetofinalback.demo.repositories.RatingRepository;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class PartnerStoreService {
 
     private final PartnerStoreRepository partnerStoreRepository;
     private final ProductRepository productRepository;
+    private final RatingRepository ratingRepository;
 
     //método pra adicionar uma loja parceira na coqueiral
     @Transactional
@@ -55,7 +57,7 @@ public class PartnerStoreService {
         PartnerStore lojaparceira = partnerStoreRepository.findById(partnerStoreId).orElse(null);
         if (lojaparceira == null) {
             throw new RuntimeException("Não foi possível deletar essa loja parceira. ERRO!!!");
-        }else{productRepository.deleteBySaleBy(lojaparceira); partnerStoreRepository.deleteById(partnerStoreId);}
+        }else{ratingRepository.deleteByPartnerId(lojaparceira); productRepository.deleteBySaleBy(lojaparceira); partnerStoreRepository.deleteById(partnerStoreId);}
 }
 }
 
